@@ -1,0 +1,106 @@
+<html>
+<head>
+
+<script id="performer_js" type="text/javascript" language="JavaScript"
+	charset="utf-8" src="file:///android_asset/js/performer.js"></script>
+
+<script type="text/javascript" language="JavaScript" charset="utf-8">
+
+	/*
+	 * Class Create a instance of Bondi class History 2010/10/02 : class is created.
+	 */
+
+	var bondi = Bondi();
+
+	function doUnload()
+	{
+		bondi.sensor.terminate();
+	}
+
+	// Define the success callback.
+	function addressBookSuccessCallback(addressBooks) {
+		if (addressBooks.type == AddressBook.SIM_ADDRESS_BOOK)
+			document.getElementById('Result').innerHTML = document
+					.getElementById('Result').innerHTML
+					+ addressBooks.name + "<br>";
+		else if (addressBooks.type == AddressBook.DEVICE_ADDRESS_BOOK)
+			document.getElementById('Result').innerHTML = document
+					.getElementById('Result').innerHTML
+					+ addressBooks.name + "<br>";
+		else
+			document.getElementById('Result').innerHTML = "Unknown type of AddressBook";
+	}
+
+	// Define the error callback.
+	function errorCallback(response) {
+		alert("The following error occured: " + response.code);
+	}
+
+	function sensorSuccessCallback(values) {
+
+		switch (values.type) {
+		case Sensor.SENSOR_ORIENTATION:
+			document.getElementById('Result_Orientation').innerHTML = "[Orientation]" 
+					+ "<br>"
+					+ "Azimuth: "
+					+ values.orientation.Azimuth
+					+ "<br>"
+					+ "Pitch: "
+					+ values.orientation.Pitch
+					+ "<br>"
+					+ "Roll: "
+					+ values.orientation.Roll;
+			break;
+		case Sensor.SENSOR_MAGNETIC_FIELD:
+			document.getElementById('Result_Magnetic_Field').innerHTML = "[Magnetic_Field]" 
+					+ "<br>"
+					+ "X: "
+					+ values.magnetic_field.x
+					+ "<br>"
+					+ "Y: "
+					+ values.magnetic_field.y
+					+ "<br>"
+					+ "Z: "
+					+ values.magnetic_field.z;
+			break;			
+		default:
+			break;
+		}
+	}
+
+	// Define the error callback.
+	function sensorErrorCallback(response) {
+		alert("The following error occured: " + response.code);
+	}
+</script>
+<style type="text/css">
+
+BODY {
+   background-repeat: repeat-y;
+   background-position: center;
+}
+</style>
+
+</head>
+
+<body onunload="doUnload()">
+<h2>Sensor Test</h2>
+<h1><a href="../default.html">Back</a></h1>
+<!-- 
+<input type="button" style="height: 50px; width: 200px" value="test"
+	onclick="bondi.test()" />
+<input type="button" style="height: 50px; width: 200px" value="contact"
+	onclick="bondi.contact.test()" />
+<input type="button" style="height: 50px; width: 200px"
+	value="Contact:getAddressBook"
+	onclick="bondi.contact.getAddressBooks(addressBookSuccessCallback, errorCallback)" />
+-->
+<input type="button" style="height: 50px; width: 200px"
+	value="Sensor:start"
+	onclick="bondi.sensor.start(Sensor.SENSOR_ACCELEROMETER|Sensor.SENSOR_MAGNETIC_FIELD|Sensor.SENSOR_ORIENTATION, sensorSuccessCallback, sensorErrorCallback)" />
+<input type="button" style="height: 50px; width: 200px"
+	value="Sensor:stop" onclick="bondi.sensor.stop()" />
+<p id="Result_Orientation">
+<p id="Result_Magnetic_Field">
+</body>
+</html>

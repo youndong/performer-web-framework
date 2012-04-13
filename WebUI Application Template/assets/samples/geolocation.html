@@ -1,0 +1,106 @@
+<html>
+<head>
+
+<script id="performer_js" type="text/javascript" language="JavaScript"
+	charset="utf-8" src="file:///android_asset/js/performer.js"></script>
+
+
+<script type="text/javascript" language="JavaScript" charset="utf-8">
+	/*
+	 * Class Create a instance of Bondi class History 2010/10/02 : class is created.
+	 */
+	 
+	var bondi = Bondi();
+	
+	function doUnload()
+	{
+		bondi.geolocation.terminate();
+	}
+	
+	// Define the success callback.
+	function successCallback_GetCurrentPosition(position) {
+		var timestamp = new Date(position.timestamp);
+		
+		document.getElementById('Result_Location').innerHTML 
+		 	= "[TimeStamp] " + timestamp.toString() + "<br>"
+		 	+ "[Coordinates]" + "<br>"
+		 	+ "    latitude = " + position.coords.latitude + "<br>"
+		 	+ "    longitude = " + position.coords.longitude + "<br>"
+		 	+ "    altitude = " + position.coords.altitude + "<br>"
+		 	+ "    accuracy = " + position.coords.accuracy + "<br>"
+		 	+ "    altitudeAccuracy = " + position.coords.altitudeAccuracy + "<br>"
+		 	+ "    heading = " + position.coords.heading + "<br>"
+		 	+ "    speed = " + position.coords.speed;
+		
+	}
+
+	// Define the error callback.
+	function errorCallback_GetCurrentPosition(response) {
+		alert("The following error occured: " + response.code);
+	}
+	
+	
+	// Define the success callback.
+	function successCallback_WatchPosition(position) {
+		var timestamp = new Date(position.timestamp);
+		
+		document.getElementById('Result_Location').innerHTML 
+		 	= "<img src='file:///android_asset/images/circularProgress.gif'></img><br>"
+		 	+ "[TimeStamp] " + timestamp.toString() + "<br>"
+		 	+ "[Coordinates]" + "<br>"
+		 	+ "    latitude = " + position.coords.latitude + "<br>"
+		 	+ "    longitude = " + position.coords.longitude + "<br>"
+		 	+ "    altitude = " + position.coords.altitude + "<br>"
+		 	+ "    accuracy = " + position.coords.accuracy + "<br>"
+		 	+ "    altitudeAccuracy = " + position.coords.altitudeAccuracy + "<br>"
+		 	+ "    heading = " + position.coords.heading + "<br>"
+		 	+ "    speed = " + position.coords.speed;
+		
+	}
+
+	// Define the error callback.
+	function errorCallback_WatchPosition(response) {
+		alert("The following error occured: " + response.code);
+	}	
+	
+	function getCurrentPosition()
+	{
+		bondi.geolocation.getCurrentPosition(successCallback_GetCurrentPosition, errorCallback_GetCurrentPosition, new PositionOptions(0, 60000, true));
+		
+		document.getElementById('Result_Location').innerHTML = "<img src='file:///android_asset/images/circularProgress.gif'></img>";
+	}
+	
+	function watchPosition()
+	{
+		bondi.geolocation.watchPosition(successCallback_WatchPosition, errorCallback_WatchPosition, new PositionOptions(0, 60000, true));
+		document.getElementById('Result_Location').innerHTML = "<img src='file:///android_asset/images/circularProgress.gif'></img>";
+	}
+	
+	function clearWatch()
+	{
+		bondi.geolocation.clearWatch(Geolocation.WatchPositionCount-1);
+		document.getElementById('Result_Location').innerHTML = "<img src='file:///android_asset/images/circularProgress.gif'></img>";
+		
+		if (Geolocation.WatchPositionCount == 0)
+			document.getElementById('Result_Location').innerHTML = "completed to clear all watch location handlers";
+	}
+	
+</script>
+</head>
+
+<body onunload="doUnload()">
+<h2>Geolocation Test</h2>
+<h1><a href="../default.html">Back</a></h1>
+<input type="button" style="height: 50px; width: 200px"
+	value="GetCurrentPosition"
+	onclick="getCurrentPosition()" />
+<input type="button" style="height: 50px; width: 200px"
+	value="WatchPosition"
+	onclick="watchPosition()" />
+<input type="button" style="height: 50px; width: 200px"
+	value="ClearWatch"
+	onclick="clearWatch()" />
+
+<p id="Result_Location">Location</p>
+</body>
+</html>
