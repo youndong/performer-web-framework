@@ -1,0 +1,51 @@
+<html>
+<head>
+
+
+<script type="text/javascript" language="JavaScript"
+	charset="utf-8" src="file:///android_asset/js/performer.js"></script>
+
+<script type="text/javascript" language="JavaScript" charset="utf-8">
+	/*
+	 * Class Create a instance of Bondi class History 2010/10/02 : class is created.
+	 */
+
+	var bondi = Bondi();
+	
+	var error = false;
+
+	function requestFeature_successCallback(obj) {
+		trace("successCallback is called");
+	}
+	function requestFeature_errorCallback(errCode) {
+		trace("errorCallback is called, code:" + errCode);
+		
+		error = true;
+	}
+
+	var ret = bondi.requestFeature(requestFeature_successCallback, requestFeature_errorCallback,
+			Bondi.FEATURE_CONTACT);
+	
+	ret = bondi.requestFeature(requestFeature_successCallback, requestFeature_errorCallback,
+			Bondi.FEATURE_CAMERA);
+	
+	ret = bondi.requestFeature(requestFeature_successCallback, requestFeature_errorCallback,
+			Bondi.FEATURE_GEOLOCATION);
+	
+	ret = bondi.requestFeature(requestFeature_successCallback, requestFeature_errorCallback,
+			Bondi.FEATURE_SENSOR);
+	
+	ret = bondi.requestFeature(requestFeature_successCallback, requestFeature_errorCallback,
+			Bondi.FEATURE_CALL);
+	
+	
+	if (error == false)
+		window.location = 'default.html';
+
+</script>
+</head>
+
+<body>
+
+</body>
+</html>

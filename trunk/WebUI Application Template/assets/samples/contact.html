@@ -1,0 +1,130 @@
+<html>
+<head>
+
+
+<script id="performer_js" type="text/javascript" language="JavaScript"
+	charset="utf-8" src="file:///android_asset/js/performer.js"></script>
+
+<script type="text/javascript" language="JavaScript" charset="utf-8">
+	/*
+	 * Class Create a instance of Bondi class History 2010/10/02 : class is created.
+	 */
+
+	var bondi = Bondi();
+
+	var addressBooks = new Array();
+	var contactString = "";
+
+	// Get AddressBooks
+	function AddressBookArraySuccessCallback(abs) {
+		trace("AddressBookArraySuccessCallback");
+
+		addressBooks = abs;
+
+		trace("AddressBook List");
+
+		for ( var index = 0; index < abs.length; index++) {
+			//var ab = new AddressBook(abs[index].id, abs[index].name, abs[index].type);
+			//addressBooks[index] = ab;
+			trace("\tIndex :" + index)
+			trace("\t\tID   :" + addressBooks[index].getID());
+			trace("\t\tName :" + addressBooks[index].getName());
+			trace("\t\tType :" + addressBooks[index].getType());
+
+			// window.contact.addContact(addressBooks[index].id);
+
+			document.getElementById('test2').innerHTML = "<input type=\"button\" style=\"height: 50px; width: 200px\" value=\"Create Contact\" onclick=\"createContact()\"></input>";
+		}
+	}
+
+	function ErrorCallback(error) {
+		trace("ErrorCallback");
+	}
+
+	function getAddressBooks() {
+		var pendingOperation = window.contact.getAddressBooks(
+				getFuncName(AddressBookArraySuccessCallback),
+				getFuncName(ErrorCallback));
+	}
+	// End of Get AddressBooks
+
+	// createContact
+
+	function createContact() {
+		contactString = JSONtoString({
+			'name' : 'contact',
+			'nicknames' : [ 'babo', 'nice guy', 'good boy' ],
+			'emails' : [ {
+				'types' : [ 'HOME', 'PREF' ],
+				'email' : 'me@gmail.com'
+			}, {
+				'types' : [ 'WORK' ],
+				'email' : 'you@gmail.com'
+			} ],
+			'phoneNumbers' : [ {
+				'types' : [ 'HOME', 'PREF', 'VOICE' ],
+				'number' : '111-111-1111'
+			}, {
+				'types' : [ 'CAR' ],
+				'number' : '222-222-2222'
+			}, {
+				'types' : [ 'WORK' ],
+				'number' : '333-333-3333'
+			} ],
+			'addresses' : [ {
+				'types' : [ 'PREF', 'WORK' ],
+				'city' : 'Seoul',
+				'country' : 'Korea'
+			}, {
+				'types' : [ 'HOME' ],
+				'city' : 'L.A',
+				'country' : 'USA'
+			} ],
+			'photoURI' : 'http://foo.com/images/pedro.jpg'
+		});
+
+		//trace(contactString);
+
+		contactString = window.contact.createContact(addressBooks[0].id, contactString);
+		
+		document.getElementById('test3').innerHTML = contactString+ "<br>"+"<input type=\"button\" style=\"height: 50px; width: 200px\" value=\"Add Contact\" onclick=\"addContact()\"></input>";
+
+	}
+
+	// Add Contact
+	function AddContact_SuccessCallback() {
+		alert("AddContact_SuccessCallback");
+		document.getElementById('test4').innerHTML = contactString+ "<br>"+"<input type=\"button\" style=\"height: 50px; width: 200px\" value=\"update Contact\" onclick=\"updateContact()\"></input>";
+
+	}
+
+	function AddContact_ErrorCallback() {
+		alert("AddContact_ErrorCallback");
+	}
+
+	function addContact() {
+		var pendingOperation = window.contact.addContact(addressBooks[0].id,
+				getFuncName(AddContact_SuccessCallback),
+				getFuncName(AddContact_ErrorCallback), contactString);
+	}
+	// End of Add Contact
+</script>
+</head>
+
+
+
+
+<body>
+<h3>Contact Test</h3>
+<h1><a href="../default.html">Back</a></h1>
+<P id="test1"><input type="button"
+	style="height: 50px; width: 200px" value="Get AddressBooks"
+	onclick='getAddressBooks()'></input></P>
+<p id="test2"></p>
+<p id="test3"></p>
+<p id="test4"></p>
+<p id="test5"></p>
+<p id="test6"></p>
+<p id="test7"></p>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<html>
+<head>
+
+<script id="performer_js" type="text/javascript" language="JavaScript"
+	charset="utf-8" src="file:///android_asset/js/performer.js"></script>
+
+
+<script type="text/javascript" language="JavaScript" charset="utf-8">
+	/*
+	 * Class Create a instance of Bondi class History 2010/10/02 : class is created.
+	 */
+
+	var bondi = Bondi();
+
+	var targetDialNo = "";
+
+	var obj;
+	
+	function onLoad() 
+	{
+		obj = document.getElementById('DialNo');
+	}
+	
+	function doUnload() {
+		bondi.call.terminate();
+	}
+
+	function doCall() {
+		bondi.callmanager.call(targetDialNo);
+	}
+
+	function addDialNo(digit) {
+		targetDialNo = targetDialNo + digit;
+		obj.innerHTML = targetDialNo;
+	}
+
+	function deleteDialNo() {
+		var length = targetDialNo.length;
+
+		if (length > 0) {
+			targetDialNo = targetDialNo.substring(0, length - 1);
+			obj.innerHTML = targetDialNo;
+		}
+	}
+
+	function deleteAll() {
+		targetDialNo = "";
+		obj.innerHTML = targetDialNo;
+	}
+</script>
+</head>
+
+<body onload="onLoad()" onunload="doUnload()">
+<h2>Dial Test</h2>
+<h1><a href="../default.html">Back</a></h1>
+
+<table align="center">
+	<tr>
+		<td align="center">
+		<table align="center" border="2" width="350" height="80">
+			<tr>
+				<td align="right"><font color="#ff0000" size="10">
+				<p id="DialNo" align="right"></p>
+				</font></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td align="center"><input type="image" src="file:///android_asset/images/1.png" width="130" height="80"
+			onclick="addDialNo('1')" /> <input type="image" src="file:///android_asset/images/2.png" width="130"
+			height="80" onclick="addDialNo('2')" /> <input type="image" src="file:///android_asset/images/3.png"
+			width="130" height="80" onclick="addDialNo('3')" /></td>
+	</tr>
+	<tr>
+		<td align="center"><img src="file:///android_asset/images/4.png" width="130" height="80"
+			onclick="addDialNo('4')" /> <img src="file:///android_asset/images/5.png" width="130"
+			height="80" onclick="addDialNo('5')" /> <img src="file:///android_asset/images/6.png"
+			width="130" height="80" onclick="addDialNo('6')" /></td>
+	</tr>
+	<tr>
+		<td align="center"><img src="file:///android_asset/images/7.png" width="130" height="80"
+			onclick="addDialNo('7')" /> <img src="file:///android_asset/images/8.png" width="130"
+			height="80" onclick="addDialNo('8')" /> <img src="file:///android_asset/images/9.png"
+			width="130" height="80" onclick="addDialNo('9')" /></td>
+	</tr>
+	<tr>
+		<td align="center"><img src="file:///android_asset/images/asterisk.png" width="130"
+			height="80" onclick="addDialNo('*')" /> <img src="file:///android_asset/images/0.png"
+			width="130" height="80" onclick="addDialNo('0')" /> <img
+			src="file:///android_asset/images/sharp.png" width="130" height="80"
+			onclick="addDialNo('#')" /></td>
+	</tr>
+	<tr>
+		<td align="center"><img src="file:///android_asset/images/c.png" width="130" height="80"
+			onclick="doCall()" /> <img src="file:///android_asset/images/left.png" width="130"
+			height="80" onclick="deleteDialNo()" /> <img src="file:///android_asset/images/x.png"
+			width="130" height="80" onclick="deleteAll()" /></td>
+	</tr>
+</table>
+</body>
+</html>
