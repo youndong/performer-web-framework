@@ -9,15 +9,15 @@ import android.util.Log;
 public class Framework {
 	/**
 	 * 
-	 */
+	 **/
 	//public static final String	CLASS_NAME	= "SmartOS";
 
 	/**
-	 * HTML page¿¡¼­Javascript ¼öÇà Áß, debuggingÀ» ¸ñÀûÀ¸·Î »ç¿ëµÈ´Ù. LogCat È­¸é¿¡ Ãâ·ÂÇÑ´Ù.
+	 * HTML pageì—ì„œJavascript ìˆ˜í–‰ ì¤‘, debuggingì„ ëª©ì ìœ¼ë¡œ ì‚¬ìš©ëœë‹¤. LogCat í™”ë©´ì— ì¶œë ¥í•œë‹¤.
 	 * 
 	 * @param message
-	 *            trace¿¡ º¸ÀÌ°íÀÚ ÇÏ´Â ¹®ÀÚ¿­ Æ÷¸ËÀÇ ³»¿ë
-	 */
+	 *            traceì— ë³´ì´ê³ ì í•˜ëŠ” ë¬¸ìì—´ í¬ë§·ì˜ ë‚´ìš©
+	 **/
 	public void trace(String message) {
 		//Log.d(Framework.CLASS_NAME, "[trace] " + message);
 	}
