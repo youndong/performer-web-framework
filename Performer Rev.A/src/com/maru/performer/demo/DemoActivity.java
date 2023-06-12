@@ -27,3 +27,5 @@ public class DemoActivity extends Activity {
 		return super.onKeyDown(keyCode, event);
 	}
 }
+
+// temp sentence for RP test
